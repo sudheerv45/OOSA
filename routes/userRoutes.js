@@ -13,7 +13,7 @@ const feedbackController = require('../controllers/feedbackController');
 // Schedule a Visit
 router.post("/schedule/scheduleVisit", visitController.scheduleVisit);
 router.get("/schedule/getAllVisits", visitController.getAllVisits);
-router.get("schedule/getVisitById/:visitId",visitController.getVisitById);
+router.get("/schedule/getVisitById/:visitId",visitController.getVisitById);
 router.put("/schedule/updateVisit/:visitId", visitController.updateVisit);
 router.delete("/schedule/deleteVisit/:visitId", visitController.deleteVisit);
 
