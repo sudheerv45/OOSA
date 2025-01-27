@@ -8,9 +8,10 @@ const visitSchema = new mongoose.Schema({
         required: true,
     },
     pgId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "PG",
-        required: true,
+        type: String,
+        // type: mongoose.Schema.Types.ObjectId,
+        // ref: "PG",
+        // required: true,
     },
     visitType: {
         type: String,
