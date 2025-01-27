@@ -10,7 +10,7 @@ const bookingSchema = new mongoose.Schema({
     pgId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "PG",
-        required: true,
+        // required: true,
     },
     bookingType: {
         type: String,
