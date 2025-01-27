@@ -1,4 +1,6 @@
 // controllers/bookingController.js
+const Booking = require('../models/Booking');
+
 const createBooking = async (req, res) => {
     try {
         const { userId, pgId, bookingType, checkInDate, checkOutDate, sharingType, roomType, room, paymentType, paymentMethod, amount } = req.body;
