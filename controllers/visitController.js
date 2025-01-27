@@ -31,6 +31,21 @@ const getAllVisits = async (req, res) => {
     }
 };
 
+const getVisitById = async (req, res) => {
+    try {
+      const { visitId } = req.params;
+      const visit = await Visit.findById(visitId).populate("userId", "name").populate("pgId", "pgName");
+  
+      if (!visit) {
+        return res.status(404).json({ message: "Visit not found" });
+      }
+  
+      res.status(200).json({ visit });
+    } catch (error) {
+      res.status(500).json({ message: "Server Error", error: error.message });
+    }
+  };  
+
 // Update Visit
 const updateVisit = async (req, res) => {
     try {
@@ -63,4 +78,4 @@ const deleteVisit = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
-module.exports = {scheduleVisit, updateVisit, getAllVisits, deleteVisit};
+module.exports = {scheduleVisit, updateVisit, getAllVisits, deleteVisit, getVisitById};
