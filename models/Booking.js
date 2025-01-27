@@ -8,8 +8,9 @@ const bookingSchema = new mongoose.Schema({
         required: true,
     },
     pgId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "PG",
+        type: String,
+        // type: mongoose.Schema.Types.ObjectId,
+        // ref: "PG",
         // required: true,
     },
     bookingType: {
