@@ -20,7 +20,7 @@ const signup = async (req, res) => {
         }
 
         // Generate OTP
-        const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
+        const otp = otpGenerator.generate(4, { digits: true, alphabets: false, upperCase: false, specialChars: false });
         user.otp = otp;
         user.otpExpiry = Date.now() + 10 * 60 * 1000; // OTP valid for 10 minutes
         await user.save();
@@ -52,7 +52,7 @@ const verifyOtp = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
-        if (otp == 123456) {
+        if (otp == 1234) {
             user.isVerified = true;
             user.otp = null; // Clear OTP
             user.otpExpiry = null; // Clear OTP expiry
@@ -96,7 +96,7 @@ const resendOtp = async (req, res) => {
         }
 
         // Generate a new OTP
-        const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
+        const otp = otpGenerator.generate(4, { digits: true, alphabets: false, upperCase: false, specialChars: false });
         user.otp = otp;
         user.otpExpiry = Date.now() + 10 * 60 * 1000; // OTP valid for 10 minutes
         await user.save();
