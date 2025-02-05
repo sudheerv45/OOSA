@@ -6,6 +6,7 @@ const ownerRoutes = require('./routes/ownerRoutes');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
+require("dotenv").config();
 
 const app = express();
 
