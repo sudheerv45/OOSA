@@ -52,29 +52,46 @@ const verifyOtp = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
+
+        // Default OTP (for testing)
         if (otp == 1234) {
             user.isVerified = true;
             user.otp = null; // Clear OTP
             user.otpExpiry = null; // Clear OTP expiry
             await user.save();
-
-            return res.status(200).json({ message: 'Mobile number verified successfully.' });
-        }
+        } 
         // Check if OTP is valid and not expired
-        if (user.otp !== otp) {
-            return res.status(400).json({ message: 'Invalid OTP.' });
-        }
-        if (user.otpExpiry && user.otpExpiry < Date.now()) {
-            return res.status(400).json({ message: 'OTP has expired. Please request a new one.' });
+        else {
+            if (user.otp !== otp) {
+                return res.status(400).json({ message: 'Invalid OTP.' });
+            }
+            if (user.otpExpiry && user.otpExpiry < Date.now()) {
+                return res.status(400).json({ message: 'OTP has expired. Please request a new one.' });
+            }
+
+            user.isVerified = true;
+            user.otp = null; // Clear OTP
+            user.otpExpiry = null; // Clear OTP expiry
+            await user.save();
         }
 
-        // Mark user as verified
-        user.isVerified = true;
-        user.otp = null; // Clear OTP
-        user.otpExpiry = null; // Clear OTP expiry
-        await user.save();
+        // Generate JWT Token
+        const token = jwt.sign(
+            { userId: user._id, mobileNumber: user.mobileNumber },
+            process.env.JWT_SECRET,
+            { expiresIn: "2d" } // Token valid for 2 days
+        );
 
-        res.status(200).json({ message: 'Mobile number verified successfully.' });
+        return res.status(200).json({ 
+            message: 'Mobile number verified successfully.',
+            token, 
+            user: {
+                _id: user._id,
+                mobileNumber: user.mobileNumber,
+                isVerified: user.isVerified
+            }
+        });
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message });
