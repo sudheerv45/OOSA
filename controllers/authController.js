@@ -2,6 +2,7 @@ const User = require('../models/authModel');
 const otpGenerator = require('otp-generator');
 // const client = require('twilio')('TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN'); // Twilio SMS Service
 const fs = require('fs');
+const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
     try {
